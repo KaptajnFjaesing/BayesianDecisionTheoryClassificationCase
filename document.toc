@@ -1,0 +1,14 @@
+\babel@toc {english}{}\relax 
+\thispagestyle {plain}
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}The Farmer Salesman}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}The Probability}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Simple Model}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Manual HMC Algorithm}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Data}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Training}{6}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}PyMC HMC Algorithm}{7}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Results}{9}{subsection.2.7}%
+\contentsline {subsubsection}{\numberline {2.7.1}Manual HMC Algorithm}{9}{subsubsection.2.7.1}%
+\contentsline {subsubsection}{\numberline {2.7.2}PyMC HMC Algorithm}{9}{subsubsection.2.7.2}%
+\contentsline {section}{\numberline {3}Summary and Discussion}{10}{section.3}%

@@ -1,0 +1,55 @@
+\subsection{PYMC HMC Algorithm}
+
+\begin{algorithm}[H]
+	\label{algo:construct_model}
+	\caption{Construct PyMC Model}
+	\begin{algorithmic}[1]
+		\State \textbf{Input:} $\text{data\_x\_training}$: Training feature data, $\text{data\_s\_training}$: Training target data
+		\State \textbf{Output:} PyMC model
+		\State $x \gets \text{MutableData}(\text{"x"}, \text{data\_x\_training})$
+		\State $\text{precision\_a} \gets \text{Gamma}(\alpha=2.4, \beta=3)$
+		\State $\text{precision\_b} \gets \text{Gamma}(\alpha=2.4, \beta=3)$
+		\State $\text{param\_a} \gets \text{Normal}(0, \sigma=\frac{1}{\sqrt{precision\_a}})$
+		\State $\text{param\_b} \gets \text{Normal}(0, \sigma=\frac{1}{\sqrt{precision\_b}})$
+		\State $G \gets \text{Deterministic}(\text{"G"}, \text{exp}(\text{param\_b} + x \cdot \text{param\_a}^T))$ 
+		\State $\text{cp} \gets \text{Deterministic}(\text{"cp"}, \frac{G}{\text{sum}(G, \text{axis}=1, \text{keepdims}=True)})$
+		\State $\text{Multinomial}(\text{"y"}, n=1, p=\text{cp}, \text{shape}=x.\text{shape}, \text{observed}=\text{data\_s\_training})$
+		\State \textbf{return} model
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\label{algo:prediction_accuracy}
+	\caption{Calculate Prediction Accuracy in PyMC}
+	\begin{algorithmic}[1]
+		\State \textbf{Input:} $\text{model}$: PyMC model, $\text{posterior}$: Posterior samples, $\text{data\_s}$: True target data, $\text{data\_x}$: Input feature data
+		\State \textbf{Output:} $\text{accuracy}$: Prediction accuracy, $\text{results}$: Mismatched predictions
+		\State \textbf{with} $\text{model}:$
+		\State \quad $\text{pm.set\_data}(\{"x": \text{data\_x}\})$
+		\State \quad $\text{pp} \gets \text{pm.sample\_posterior\_predictive}(\text{posterior}, \text{predictions}=True)$ 
+		\State  $\text{cp} \gets \text{pp.predictions['y'].mean(('draw','chain')).values}$
+		\State  $\text{targets} \gets [1 \text{ if } a>b \text{ else } 0 \text{ for } a,b \text{ in } \text{cp}]$
+		\State  $\text{true\_targets} \gets [1 \text{ if } a>b \text{ else } 0 \text{ for } a,b \text{ in } \text{data\_s}]$
+		\State  $\text{accuracy} \gets [1 \text{ if } a == b \text{ else } 0 \text{ for } a,b \text{ in } \text{list(zip(targets,true\_targets))}]$
+		\State $\text{results} \gets []$
+		\For{$i \text{ in range}(\text{len}(\text{accuracy}))$}
+		\State \quad \textbf{if} $\text{accuracy}[i] == 0:$
+		\State \quad \quad $\text{results.append}([\text{predicted\_class\_probabilities}[i],\text{data\_x}[i]])$
+		\EndFor
+		\State \textbf{return} $\text{accuracy}$, $\text{results}$
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}[H]
+	\caption{Sampling from PyMC Model}
+	\begin{algorithmic}[1]
+		\State $\text{model} \gets \text{Algo1}(\text{data\_x\_training}, \text{data\_s\_training})$
+		\State \textbf{with} $\text{model}:$
+		\State \quad $\text{posterior} \gets \text{pm.sample(tune}=500, \text{draws}=1500, \text{chains}=1)$
+		\State $\text{acc\_train, res\_train} \gets \text{Algo2}(\text{model}, \text{posterior}, \text{data\_x\_training}, \text{data\_s\_training})$
+		\State $\text{acc\_test, res\_test} \gets \text{Algo2}(\text{model}, \text{posterior}, \text{data\_x\_test}, \text{data\_s\_test})$
+	\end{algorithmic}
+\end{algorithm}
