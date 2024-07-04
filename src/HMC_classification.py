@@ -4,22 +4,49 @@ Created on Wed Dec  6 09:43:05 2023
 
 @author: 1056672
 """
-import numpy as np
+
+#%%
 import random
+import numpy as np
 import pandas as pd
 from tqdm import tqdm
 import pickle
 from scipy.special import gamma
 import matplotlib.pyplot as plt
+import os 
 
 # Specify the path to your pickle file
-pickle_file_path = r'C:\Users\1056672\OneDrive - VELUX\Documents\workspace_research_scientist\commit_projects\farm\src\mock_data.pkl'
+pickle_file_path = r'.\BayesianDecisionTheoryClassificationCase\data\mock_data.pkl'
+absolute_pickle_file_path = os.path.abspath(pickle_file_path)
+print(f"Absolute path: {absolute_pickle_file_path}")
+print(pickle_file_path)
 
-# Open the file in binary mode
-with open(pickle_file_path, 'rb') as file:
-    # Load the object from the file
-    loaded_object = pickle.load(file)
+#%%
 
+# Print the current working directory
+current_working_directory = os.getcwd()
+print(f"Current working directory: {current_working_directory}")
+
+# Specify the relative path to your pickle file
+relative_pickle_file_path = r'..\BayesianDecisionTheoryClassificationCase\data\mock_data.pkl'
+
+# Convert to absolute path
+absolute_pickle_file_path = os.path.abspath(relative_pickle_file_path)
+print(f"Absolute path: {absolute_pickle_file_path}")
+
+# Check if the file exists
+if not os.path.exists(absolute_pickle_file_path):
+    print(f"File not found: {absolute_pickle_file_path}")
+else:
+    # Open the file in binary mode
+    with open(absolute_pickle_file_path, 'rb') as file:
+        # Load the object from the file
+        loaded_object = pickle.load(file)
+    print("File loaded successfully")
+
+
+
+#%%
 df_farm_training = pd.DataFrame(loaded_object).iloc[:600]
 df_farm_test = pd.DataFrame(loaded_object).iloc[600:]
 
