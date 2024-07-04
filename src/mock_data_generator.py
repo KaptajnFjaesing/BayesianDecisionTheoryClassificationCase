@@ -1,3 +1,5 @@
+#%%
+
 import random
 import pickle
 import os
@@ -27,8 +29,12 @@ for row in range(len(df)):
 
 df["target"] = target
 
-os.chdir(r"C:\Users\1056672\OneDrive - VELUX\Documents\workspace_research_scientist\commit_projects\farm\src")
+# Specify the path to your pickle file
+pickle_file_path = r'..\data\mock_data.pkl'
 
-# Export data to pkl format
-with open('mock_data.pkl', 'wb') as pkl_file:
+with open(pickle_file_path, 'wb') as pkl_file:
     pickle.dump(df, pkl_file)
+
+print(f"Pickle file saved successfully at {pickle_file_path}")
+
+# %%

@@ -4,20 +4,26 @@ Created on Tue Mar 12 10:17:07 2024
 
 @author: 1056672
 """
-
-import os
-
-os.chdir(r'C:\Users\1056672\OneDrive - VELUX\Documents\workspace_research_scientist\commit_projects\farm\src')
-
+# %%
 import pandas as pd
 import numpy as np
 import pymc as pm
 import pickle
 import HMC as hmc
 import matplotlib.pyplot as plt
-# Specify the path to your pickle file
-pickle_file_path = r'C:\Users\1056672\OneDrive - VELUX\Documents\workspace_research_scientist\commit_projects\farm\src\mock_data.pkl'
 
+# Specify the path to your pickle file
+pickle_file_path = r'..\data\mock_data.pkl'
+
+# Check if the file exists
+if not os.path.exists(pickle_file_path):
+    print(f"File not found: {pickle_file_path}")
+else:
+    # Open the file in binary mode
+    with open(pickle_file_path, 'rb') as file:
+        # Load the object from the file
+        loaded_object = pickle.load(file)
+    print("File loaded successfully")
 
 
 def prediction_accuracy_hmc(HMC_result, burn_in, data_s, data_x):
@@ -73,11 +79,6 @@ def prediction_accuracy_pymc(model, posterior, data_s, data_x):
             results.append([predicted_class_probabilities[i],data_x[i]])
     return accuracy, results
  
-# Open the file in binary mode
-with open(pickle_file_path, 'rb') as file:
-    # Load the object from the file
-    loaded_object = pickle.load(file)
-
 # Split the data into training and test sets
 df_farm_training = pd.DataFrame(loaded_object).iloc[:600]
 df_farm_test = pd.DataFrame(loaded_object).iloc[600:]

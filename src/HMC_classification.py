@@ -16,37 +16,18 @@ import matplotlib.pyplot as plt
 import os 
 
 # Specify the path to your pickle file
-pickle_file_path = r'.\BayesianDecisionTheoryClassificationCase\data\mock_data.pkl'
-absolute_pickle_file_path = os.path.abspath(pickle_file_path)
-print(f"Absolute path: {absolute_pickle_file_path}")
-print(pickle_file_path)
-
-#%%
-
-# Print the current working directory
-current_working_directory = os.getcwd()
-print(f"Current working directory: {current_working_directory}")
-
-# Specify the relative path to your pickle file
-relative_pickle_file_path = r'..\BayesianDecisionTheoryClassificationCase\data\mock_data.pkl'
-
-# Convert to absolute path
-absolute_pickle_file_path = os.path.abspath(relative_pickle_file_path)
-print(f"Absolute path: {absolute_pickle_file_path}")
+pickle_file_path = r'..\data\mock_data.pkl'
 
 # Check if the file exists
-if not os.path.exists(absolute_pickle_file_path):
-    print(f"File not found: {absolute_pickle_file_path}")
+if not os.path.exists(pickle_file_path):
+    print(f"File not found: {pickle_file_path}")
 else:
     # Open the file in binary mode
-    with open(absolute_pickle_file_path, 'rb') as file:
+    with open(pickle_file_path, 'rb') as file:
         # Load the object from the file
         loaded_object = pickle.load(file)
     print("File loaded successfully")
 
-
-
-#%%
 df_farm_training = pd.DataFrame(loaded_object).iloc[:600]
 df_farm_test = pd.DataFrame(loaded_object).iloc[600:]
 
@@ -60,8 +41,6 @@ The target data must have dimensions (time, classes), where classes is the
 number of classes.
 
 """
-
-
 data_x_training = np.array(df_farm_training[["area","animals"]].values)
 data_s_training = np.row_stack([(1, 0) if val else (0, 1) for val in df_farm_training["target"]])
 
