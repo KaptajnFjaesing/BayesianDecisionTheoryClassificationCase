@@ -11,6 +11,7 @@ import pymc as pm
 import pickle
 import HMC as hmc
 import matplotlib.pyplot as plt
+import os
 
 # Specify the path to your pickle file
 pickle_file_path = r'..\data\mock_data.pkl'

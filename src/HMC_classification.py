@@ -13,7 +13,7 @@ from tqdm import tqdm
 import pickle
 from scipy.special import gamma
 import matplotlib.pyplot as plt
-import os 
+import os
 
 # Specify the path to your pickle file
 pickle_file_path = r'..\data\mock_data.pkl'

@@ -2,7 +2,6 @@
 
 import random
 import pickle
-import os
 import pandas as pd
 
 def generate_dummy_data(num_people: int = 1000, square_meters_per_animal: float = 3.2):
